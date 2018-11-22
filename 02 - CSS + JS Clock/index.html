@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS AND JS CLOCK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand shadow-left"></div>
+      <div class="hand minute-hand shadow-left"></div>
+      <div class="hand second-hand shadow-left"></div>
+    </div>
+  </div>
+</body>
+<script>
+  const secondHand = document.querySelector('.second-hand');
+  const minuteHand = document.querySelector('.minute-hand');
+  const hourHand = document.querySelector('.hour-hand');
+  const SEC_MIN_POSITION_FIFTEEN = 15;
+  const SEC_MIN_POSITION_FORTYFIVE = 45;
+  const HOUR_POSITION_THREE = 3;
+  const HOUR_POSITION_NINE = 9;
+  function setDate() {
+    const now = new Date();
+    const seconds = now.getSeconds();
+    const secondDegree = (seconds / 60) * 360 + 90;
+    secondHand.style.transition = secondDegree === 90 ? 'all 0s' : 'all 0.05s'
+    secondHand.style.transform = `rotate(${secondDegree}deg)`;
+    if (seconds > SEC_MIN_POSITION_FIFTEEN && seconds < SEC_MIN_POSITION_FORTYFIVE) {
+      secondHand.classList.add('shadow-right');
+      secondHand.classList.remove('shadow-left');
+    }else {
+      secondHand.classList.add('shadow-left');
+      secondHand.classList.remove('shadow-right');
+    }
+
+    const minutes = now.getMinutes();
+    const minuteDegree = (minutes / 60) * 360 + 90;
+    minuteHand.style.transition = minuteDegree === 90 ? 'all 0s' : 'all 0.1s';
+    minuteHand.style.transform = `rotate(${minuteDegree}deg)`;
+    if (minutes > SEC_MIN_POSITION_FIFTEEN && minutes < SEC_MIN_POSITION_FORTYFIVE) {
+      minuteHand.classList.add('shadow-right');
+      minuteHand.classList.remove('shadow-left');
+    }else {
+      minuteHand.classList.add('shadow-left');
+      minuteHand.classList.remove('shadow-right');
+    }
+
+    const hours = now.getHours();
+    const hourDegree = (hours / 12) * 360 + 90;
+    hourHand.style.transition = hourDegree === 90 ? 'all 0s' : 'all 0.15s';
+    hourHand.style.transform = `rotate(${hourDegree}deg)`;
+    if (hours > HOUR_POSITION_THREE && hours < HOUR_POSITION_NINE) {
+      hourHand.classList.add('shadow-right');
+      hourHand.classList.remove('shadow-left');
+    }else {
+      hourHand.classList.add('shadow-left');
+      hourHand.classList.remove('shadow-right');
+    }
+  }
+  setInterval(setDate, 1000);
+</script>
+
+</html>
